@@ -1,0 +1,51 @@
+
+COMPONENTS
+- ROOT: Login, Registration, Random
+- BROWSE: Search, List
+- LISTINGS: Create, Edit/Delete
+
+PAGE ROUTES:
+1. '/' (login & registration) - store email in BehaviorSubject
+2. '/browse' (search for bikes)
+3. '/listings' (show user's own bikes)
+
+
+Additional Reqs:
+- Login & registration (auto-login too)
+- Show 'Bike of the day' -- random bike to present on the front page
+- If failed login 5x (store in BehaviorSubject), restrict login for 1 hr
+- Search bar with live results
+- Modal to show contact info
+
+
+API ROUTES:
+
+1. POST '/api/auth/register' - create
+2. POST '/api/auth/login' - check
+3. POST '/api/auth/login' - check
+4. GET '/api/auth/check/:email' - confirm unique email
+5. GET '/api/auth/confirm/:email' - confirm if online
+
+1. GET '/api/bikes/create' - add bike
+2. GET '/api/bikes/list' - *IF searchbar is empty
+3. PUT '/api/bikes/id/:id - update
+4. DELETE '/api/bikes/id/:id - destroy
+5. GET '/api/bikes/byTitle/:title' - filter bike title
+6. GET '/api/bikes/byEmail/:email' - filter by owner's email
+
+
+User:
+- online
+- first
+- last
+- _pw
+- _pwconf
+- BIKES
+
+Bike (all fields req)
+- name
+- desc (maxlength 200)
+- price (min $1)
+- city
+- url
+- OWNER
