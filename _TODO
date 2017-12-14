@@ -1,4 +1,5 @@
 
+
 COMPONENTS
 - ROOT: Login, Registration, Random
 - BROWSE: Search, List
@@ -11,10 +12,9 @@ PAGE ROUTES:
 
 
 Additional Reqs:
-- Login & registration (auto-login too)
 - Show 'Bike of the day' -- random bike to present on the front page
-- If failed login 5x (store in BehaviorSubject), restrict login for 1 hr
-- Search bar with live results
+- If failed login 5x (store count in BehaviorSubject), restrict login for 1 hr. log time of 5th fail and restrict until 1 hour later
+- Search bar with live results: https://netbasal.com/using-pipe-results-in-angular-templates-430683fa2213
 - Modal to show contact info
 
 
@@ -26,11 +26,11 @@ API ROUTES:
 4. GET '/api/auth/check/:email' - confirm unique email
 5. GET '/api/auth/confirm/:email' - confirm if online
 
-1. GET '/api/bikes/create' - add bike
-2. GET '/api/bikes/list' - *IF searchbar is empty
+1. POST '/api/bikes/create' - add bike
+2. GET '/api/bikes/list' - *IF searchbar empty
 3. PUT '/api/bikes/id/:id - update
 4. DELETE '/api/bikes/id/:id - destroy
-5. GET '/api/bikes/byTitle/:title' - filter bike title
+5. GET '/api/bikes/byName/:name' - filter bike name
 6. GET '/api/bikes/byEmail/:email' - filter by owner's email
 
 

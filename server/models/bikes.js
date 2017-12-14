@@ -1,7 +1,8 @@
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const BikeSchema = new mongoose.Schema({
+const BikeSchema = new Schema({
 
     _owner: {type: Schema.Types.ObjectId, ref: 'User'},
     
@@ -25,11 +26,6 @@ const BikeSchema = new mongoose.Schema({
     city: {
         type: String,
         required: [true, 'City required']
-    },
-
-    url: {
-        type: String,
-        required: [true]
     }
 
 }, {timestamps: true});

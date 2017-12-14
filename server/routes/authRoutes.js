@@ -17,7 +17,7 @@ module.exports = (router) => {
     router.post('/register', auth.join);
     router.post('/login', auth.login);
     router.post('/logout', auth.logout);
-    router.get('/check/:email', auth.check);
-    router.get('/confirm/:email', auth.confirm);
+    router.get('/confirm', auth.confirm);
+    router.get('/check/:email', auth.checkEmail);
 
 };

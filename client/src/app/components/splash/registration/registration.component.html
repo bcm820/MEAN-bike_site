@@ -1,0 +1,109 @@
+
+<form (submit)="register()" #form="ngForm" class=form-horizontal>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Email:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=text name=email required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+        [(ngModel)]='user.email' #email='ngModel'
+        (keyup)="user.email = user.email.toLowerCase()"
+        (keyup)="updateEmail($event.target.value)"/>
+    </div>
+    <div class="col-sm-4 form-control-static">
+      <span *ngIf="email.errors && email.dirty">
+        <span class="error glyphicon glyphicon-remove" [hidden]="!email.errors"></span>
+        <span class=error [hidden]="!email.errors.required">Email required</span>
+        <span class=error [hidden]="!email.errors.pattern">Enter valid format</span>
+      </span>
+      <span *ngIf=!unique>
+        <span class="error glyphicon glyphicon-remove"></span>
+        <span class=error>Duplicate email found</span>
+      </span>
+      <span *ngIf="email.valid && unique" class="glyphicon glyphicon-ok valid"></span>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">First Name:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=text name=first required minlength=3
+      [(ngModel)]='user.first' #first='ngModel'/>
+    </div>
+    <div class="col-sm-4 form-control-static">
+      <span *ngIf="first.errors && first.dirty">
+        <span class="error glyphicon glyphicon-remove" [hidden]="!first.errors"></span>
+        <span class=error [hidden]="!first.errors.required">First name required</span>
+        <span class=error [hidden]="!first.errors.minlength">3 characters minimum</span>
+      </span>
+      <span *ngIf="first.valid" class="glyphicon glyphicon-ok valid"></span>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Last Name:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=text name=last required minlength=3
+      [(ngModel)]='user.last' #last='ngModel'/>
+    </div>
+    <div class="col-sm-4 form-control-static">
+      <span *ngIf="last.errors && last.dirty">
+        <span class="error glyphicon glyphicon-remove" [hidden]="!last.errors"></span>
+        <span class=error [hidden]="!last.errors.required">Last name required</span>
+        <span class=error [hidden]="!last.errors.minlength">3 characters minimum</span>
+      </span>
+      <span *ngIf="last.valid" class="glyphicon glyphicon-ok valid"></span>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Password:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=password name=_pw required minlength=8
+      [(ngModel)]='user._pw' #_pw='ngModel'/>
+    </div>
+    <div class="col-sm-4 form-control-static">
+      <span *ngIf="_pw.errors && _pw.dirty">
+        <span class="error glyphicon glyphicon-remove" [hidden]="!_pw.errors"></span>
+        <span class=error [hidden]="!_pw.errors.required">Password required</span>
+        <span class=error [hidden]="!_pw.errors.minlength">8 characters minimum</span>
+      </span>
+      <span *ngIf="_pw.valid" class="glyphicon glyphicon-ok valid"></span>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Confirmation:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=password name=_pwconf required minlength=8 pattern={{user._pw}}
+      [(ngModel)]='user._pwconf' #_pwconf='ngModel'/>
+    </div>
+    <div class="col-sm-4 form-control-static">
+      <span *ngIf="_pwconf.errors && _pwconf.dirty">
+        <span class="error glyphicon glyphicon-remove" [hidden]="!_pwconf.errors"></span>
+        <span class=error [hidden]="!_pwconf.errors.required">Confirmation required</span>
+        <span class=error [hidden]="!_pwconf.errors.pattern">Must match password</span>
+      </span>
+      <span *ngIf="_pwconf.valid" class="glyphicon glyphicon-ok valid"></span>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class=col-sm-4></div>
+    <div class=col-sm-4>
+      <input *ngIf="!form.valid || !unique" type=submit value=Register class="btn btn-block btn-danger disabled" [disabled]="!form.valid">
+      <input *ngIf="form.valid && unique" type=submit value=Register class="btn btn-block btn-primary">
+    </div>
+  </div>
+
+  <div *ngIf="flashes" class="form-group text-center">
+    <div class=col-sm-3></div>
+    <div class=col-sm-6>
+      <div class="alert alert-danger">
+        <span *ngFor="let flash of flashes">{{flash}}<br></span>
+      </div>
+    </div>
+    <div class=col-sm-3></div>
+  </div>
+
+</form>

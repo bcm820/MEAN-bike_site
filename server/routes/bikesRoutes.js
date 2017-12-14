@@ -30,7 +30,7 @@ module.exports = (router) => {
     router.post('/create', bikes.create);
     router.put('/id/:id', bikes.update);
     router.delete('/id/:id', bikes.delete);
-    router.get('/byTitle/:title', filter.byName);
+    router.get('/byTitle/:title', filter.byTitle);
     router.get('/byEmail/:email', filter.byEmail);
 
 };

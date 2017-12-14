@@ -1,0 +1,38 @@
+
+<form (submit)="login()" #form="ngForm" class=form-horizontal>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Email:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=text name=email required
+        [(ngModel)]='user.email' #email='ngModel'/>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class="col-sm-4 text-right"><label class="control-label">Password:</label></div>
+    <div class=col-sm-4>
+      <input class=form-control type=password name=_pw required
+      [(ngModel)]='user._pw' #_pw='ngModel'/>
+    </div>
+  </div>
+
+  <div class=form-group>
+    <div class=col-sm-4></div>
+    <div class=col-sm-4>
+      <input *ngIf="!form.valid" type=submit value=Login class="btn btn-block btn-danger disabled" [disabled]="!form.valid">
+      <input *ngIf="form.valid" type=submit value=Login class="btn btn-block btn-primary">
+    </div>
+  </div>
+
+  <div *ngIf="flash" class="form-group text-center">
+    <div class=col-sm-3></div>
+    <div class=col-sm-6>
+      <div class="alert alert-danger">
+        <span>{{flash}}<br></span>
+      </div>
+    </div>
+    <div class=col-sm-3></div>
+  </div>
+
+</form>

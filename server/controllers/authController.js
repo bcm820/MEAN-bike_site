@@ -16,7 +16,7 @@ module.exports = {
     join(req, res){
         const user = new User(req.body);
         user.save()
-        .then(user => res.status(200).json(user)) // return user
+        .then(user => res.json(user)) // return user
         .catch(err => res.json(listErrs(err)));
     },
 
@@ -29,42 +29,47 @@ module.exports = {
             .then(user => {
                 if(user === null){ res.status(403).json('Email address not found'); }
                 else {
-                    user.checkPW(req.body._pw, (
-                        success => {
-                            // update online status :)
-                            User.findByIdAndUpdate(user._id, {$set:{online:true}})
-                            .then(success => res.status(200).json(user)) // return user object
-                            .catch(err => res.status(500).json('DB error'), console.log(err));
-                        },
-                        err => res.status(403).json('Password invalid')
-                    ));
+                    user.checkPW(req.body._pw, (err, good) => {
+                        if(err){ res.status(403).json('Password invalid') }
+                        else {
+                            req.session.uid = user._id;
+                            res.json(user);
+                        }
+                    });
                 }
             })
-            .catch(err => res.status(500).json('DB error'), console.log(err));
+            .catch(err => {
+                res.status(500).json('DB error');
+                console.log(err);
+            });
         }
     },
 
     // api/auth/logout
     logout(req, res){
-        User.findByIdAndUpdate(user._id, {$set:{online:false}})
-        .then(success => res.status(200).json(user)) // return user object
-        .catch(err => res.status(500).json('DB error'), console.log(err));
-    },
-
-    // api/auth/check
-    check(req, res){
-        User.count({email:req.email})
-        .then(count => res.json(count))
-        .catch(err => res.status(500).json('DB error'), console.log(err));
+        req.session.uid = undefined;
+        res.json('User logged out')
     },
 
     // api/auth/confirm
     confirm(req, res){
-        User.find({email:req.email})
-        .then(user => {
-            if(user.online){ res.status(200).json(true); }
-            else { res.status(403).json(false); }
-        })
-        .catch(err => res.status(500).json('DB error'), console.log(err));
+        if(req.session.uid){
+            console.log(req.session.uid);
+            User.findById(req.session.uid)
+            .then(user => res.json(user))
+            .catch(err => res.status(500).json(err));
+        }
+        else { res.json(false); }
+    },
+
+    // api/auth/check
+    checkEmail(req, res){
+        User.count({email:req.email})
+        .then(count => res.json(count))
+        .catch(err => {
+            res.status(500).json('DB error');
+            console.log(err);
+        });
     }
+
 }

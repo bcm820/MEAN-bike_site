@@ -1,0 +1,34 @@
+
+<h3>Create Listing</h3>
+
+<form (submit)="create()" #form="ngForm">
+
+<div class=col-sm-6>
+  <div class=form-group>
+    <input required name=name [(ngModel)]=bike.name #name='ngModel'
+    type=text class=form-control placeholder="Name">
+  </div>
+  <div class=form-group>
+    <textarea required name=desc [(ngModel)]=bike.desc #desc='ngModel'
+    class=form-control placeholder=Description></textarea>
+  </div>
+</div>
+
+<div class=col-sm-3>
+  <div class=form-group>
+    <input required name=price maxlength=200 [(ngModel)]=bike.price #price='ngModel'
+    type=number class=form-control placeholder=Price>
+  </div>
+  <div class=form-group>
+    <input required name=city min=1 [(ngModel)]=bike.city #city='ngModel'
+    type=text class=form-control placeholder="City">
+  </div>
+</div>
+
+<div class=col-sm-3>
+  <div class=form-group>
+    <input type=submit class="btn btn-success" value=Create>
+  </div>
+</div>
+
+</form>

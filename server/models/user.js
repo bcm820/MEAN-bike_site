@@ -1,16 +1,15 @@
 
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const uniqueCheck = require('mongoose-unique-validator');
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     
     _bikes: [{type: Schema.Types.ObjectId, ref: 'Bike'}],
     
-    online: {
-        type: boolean,
-        default: false
-    },
+    blocked: { type: Boolean, default: false },
+    limit: { type: Date },
     
     email: {
         type: String, unique: [true], trim: true,
@@ -57,7 +56,7 @@ UserSchema.pre('save', function(next){
     const user = this;
     bcrypt.hash(this._pw, 10, (err, hashedPass) => {
         user._pw = hashedPass;
-        user._pwconf = undefined
+        delete user._pwconf;
         next();
     });
 });
