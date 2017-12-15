@@ -7,7 +7,7 @@ export class BikeService {
   constructor(private _http: HttpClient) { }
 
   create(bike){
-    return this._http.post('/api/bikes/create', bike);
+    return this._http.post(`/api/bikes/create`, bike);
   }
 
   list(){
@@ -22,8 +22,12 @@ export class BikeService {
     return this._http.delete(`/api/bikes/id/${bike._id}`);
   }
 
-  byTitle(title){
-    return this._http.get(`/api/bikes/byTitle/${title}`);
+  byName(name){
+    return this._http.get(`/api/bikes/byName/${name}`);
+  }
+
+  byEmail(email){
+    return this._http.get(`/api/bikes/byEmail/${email}`);
   }
 
 }

@@ -52,9 +52,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         if(Array.isArray(res)){ this.flashes = res; }
         else {
-          this._as.login(this.user);
-          this._router.navigate(['browse']);
-          this.user = new User();
+          this._as.login(this.user).subscribe(
+            res => {
+              this._as.updateUser();
+              console.log('User registered and logged in');
+              this._router.navigate(['browse']);
+            }
+          );
         }
       });
   }

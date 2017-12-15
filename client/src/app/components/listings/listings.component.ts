@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
+import { BikeService } from '../../services/bike.service';
 
 @Component({
   selector: 'app-listings',
@@ -11,9 +12,11 @@ import { AuthService } from '../../services/auth.service';
 export class ListingsComponent implements OnInit {
   
   user;
+  userBikes;
   
   constructor(
     private _as: AuthService,
+    private _bs: BikeService,
     private _router: Router
   ){}
 
@@ -22,6 +25,7 @@ export class ListingsComponent implements OnInit {
     this._as.user$.subscribe(user => {
       this.user = user;
       this.authenticate();
+      this.getBikes();
     })
   }
 
@@ -29,6 +33,11 @@ export class ListingsComponent implements OnInit {
     if(this.user === false){
       this._router.navigate([''])
     }
+  }
+
+  getBikes(){
+    this._bs.byEmail(this.user.email)
+    .subscribe(bikes => this.userBikes = bikes);
   }
 
 }

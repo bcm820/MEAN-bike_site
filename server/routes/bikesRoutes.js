@@ -14,8 +14,8 @@ module.exports = (router) => {
        next();
     });
 
-    router.param('title', (req, res, next, title) => {
-        req.title = title;
+    router.param('name', (req, res, next, name) => {
+        req.name = name;
         next();
     });
 
@@ -30,7 +30,7 @@ module.exports = (router) => {
     router.post('/create', bikes.create);
     router.put('/id/:id', bikes.update);
     router.delete('/id/:id', bikes.delete);
-    router.get('/byTitle/:title', filter.byTitle);
+    router.get('/byName/:name', filter.byName);
     router.get('/byEmail/:email', filter.byEmail);
 
 };

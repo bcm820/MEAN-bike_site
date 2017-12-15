@@ -1,6 +1,6 @@
 
 const Bike = require('mongoose').model('Bike');
-
+const User = require('mongoose').model('User');
 
 function listErrs(err){
     let list = [];
@@ -35,7 +35,7 @@ module.exports = {
     create(req, res){
         const bike = new Bike(req.body);
         bike.save()
-        .then(bike => res.status(201).json(bike)) // return new bike
+        .then(bike => res.json(bike))
         .catch(err => res.status(403).json(listErrs(err)));
     },
 

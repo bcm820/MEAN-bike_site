@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const BikeSchema = new Schema({
 
-    _owner: {type: Schema.Types.ObjectId, ref: 'User'},
+    owner: { type: String },
+    email: { type: String },
     
     name: {
         type: String,

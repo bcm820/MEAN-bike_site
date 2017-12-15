@@ -6,7 +6,7 @@ const uniqueCheck = require('mongoose-unique-validator');
 
 const UserSchema = new Schema({
     
-    _bikes: [{type: Schema.Types.ObjectId, ref: 'Bike'}],
+    bikes: [{type: Schema.Types.ObjectId, ref: 'Bike'}],
     
     blocked: { type: Boolean, default: false },
     limit: { type: Date },
@@ -56,7 +56,7 @@ UserSchema.pre('save', function(next){
     const user = this;
     bcrypt.hash(this._pw, 10, (err, hashedPass) => {
         user._pw = hashedPass;
-        delete user._pwconf;
+        user._pwconf = undefined;
         next();
     });
 });
